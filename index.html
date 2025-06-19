@@ -121,7 +121,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(224,220,202,0.6039215686274509)',
-                interactive: true,
+                interactive: false,
             }
         }
         map.createPane('pane_WorldMap_0');
@@ -129,7 +129,7 @@
         map.getPane('pane_WorldMap_0').style['mix-blend-mode'] = 'normal';
         var layer_WorldMap_0 = new L.geoJson(json_WorldMap_0, {
             attribution: '',
-            interactive: true,
+            interactive: false,
             dataVar: 'json_WorldMap_0',
             layerName: 'layer_WorldMap_0',
             pane: 'pane_WorldMap_0',
@@ -141,14 +141,19 @@
         function pop_heinrich_matched_by_locality_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">start_date</th>\
+                        <th scope="row">Place name</th>\
+                        <td class="visible-with-data" id="matched_name">' + (feature.properties['matched_name'] !== null ? autolinker.link(String(feature.properties['matched_name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Date</th>\
                         <td class="visible-with-data" id="start_date">' + (feature.properties['start_date'] !== null ? autolinker.link(String(feature.properties['start_date']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">summary</th>\
+                        <th scope="row">Regest</th>\
                         <td class="visible-with-data" id="summary">' + (feature.properties['summary'] !== null ? autolinker.link(String(feature.properties['summary']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
+                        <th scope="row">RI id</th>\
                         <td colspan="2">' + (feature.properties['regestennummernorm'] !== null ? autolinker.link(String(feature.properties['regestennummernorm']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
@@ -156,10 +161,6 @@
                     </tr>\
                     <tr>\
                         <td colspan="2"><strong>ecclesiastical_terms</strong><br />' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String(feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">matched_name</th>\
-                        <td class="visible-with-data" id="matched_name">' + (feature.properties['matched_name'] !== null ? autolinker.link(String(feature.properties['matched_name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -171,7 +172,7 @@
 
         function style_heinrich_matched_by_locality_1_0(feature) {
             switch(String(feature.properties['ecclesiastical_flag'])) {
-                case 'False':
+                case 'false':
                     return {
                 pane: 'pane_heinrich_matched_by_locality_1',
                 radius: 4.0,
@@ -187,7 +188,7 @@
                 interactive: true,
             }
                     break;
-                case 'True':
+                case 'true':
                     return {
                 pane: 'pane_heinrich_matched_by_locality_1',
                 radius: 4.0,
@@ -243,12 +244,6 @@
         map.addLayer(layer_heinrich_matched_by_locality_1);
         function pop_dioceses_2(feature, layer) {
             var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(String(feature.properties['id']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
@@ -306,11 +301,28 @@
             pane: 'pane_dioceses_2',
             onEachFeature: pop_dioceses_2,
             pointToLayer: function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.circleMarker(latlng, style_dioceses_2_0(feature));
+                let iconUrl;
+
+                switch (feature.properties['Type']) {
+                    case 'Archbishopric':
+                        iconUrl = 'legend/dioceses_2_Archbishopric0.png'; // Use your actual icon path
+                        break;
+                    case 'Bishopric':
+                        iconUrl = 'legend/dioceses_2_Bishopric1.png'; // Use your actual icon path
+                        break;
+                    default:
+                        // Fallback to a generic icon or a circleMarker
+                        return L.circleMarker(latlng, style_dioceses_2_0(feature));
+                }
+
+                const customIcon = L.icon({
+                    iconUrl: iconUrl,
+                    iconSize: [15, 15],        // Adjust as needed
+                    iconAnchor: [10, 3],      // Bottom center
+                    popupAnchor: [0, 0]      // Above the marker
+                });
+
+                return L.marker(latlng, {icon: customIcon});
             },
         });
         bounds_group.addLayer(layer_dioceses_2);
