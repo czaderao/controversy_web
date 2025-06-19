@@ -330,7 +330,7 @@
         function pop_Addedgeominfo_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['straightdis'] !== null ? autolinker.link(String((feature.properties['straightdis']*(180 / Math.PI))*6371).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['straightdis'] !== null ? autolinker.link(String((feature.properties['straightdis']*(Math.PI/180))*6371).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
