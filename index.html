@@ -330,7 +330,7 @@
         function pop_Addedgeominfo_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['straightdis'] !== null ? autolinker.link(String((feature.properties['straightdis']*(Math.PI/180))*6371).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">'+ 'Distance: ' + (feature.properties['straightdis'] !== null ? autolinker.link(String(((feature.properties['straightdis']*(Math.PI/180))*6371).toFixed(2)).replace(/'/g, '\'').toLocaleString()) : '') + ' km</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -348,7 +348,7 @@
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
-                weight: 2.0,
+                weight: 2.5,
                 fillOpacity: 0,
                 interactive: true,
             }
