@@ -305,10 +305,10 @@
 
                 switch (feature.properties['Type']) {
                     case 'Archbishopric':
-                        iconUrl = 'legend/dioceses_2_Archbishopric0.png'; // Use your actual icon path
+                        iconUrl = 'legend/dioceses_2_Archbishopric0.png';
                         break;
                     case 'Bishopric':
-                        iconUrl = 'legend/dioceses_2_Bishopric1.png'; // Use your actual icon path
+                        iconUrl = 'legend/dioceses_2_Bishopric1.png';
                         break;
                     default:
                         // Fallback to a generic icon or a circleMarker
@@ -317,9 +317,9 @@
 
                 const customIcon = L.icon({
                     iconUrl: iconUrl,
-                    iconSize: [15, 15],        // Adjust as needed
-                    iconAnchor: [10, 10],      // Bottom center
-                    popupAnchor: [0, 0]      // Above the marker
+                    iconSize: [15, 15],
+                    iconAnchor: [10, 10],
+                    popupAnchor: [0, 0]
                 });
 
                 return L.marker(latlng, {icon: customIcon});
