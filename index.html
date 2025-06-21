@@ -21,6 +21,13 @@
         <title></title>
     </head>
     <body>
+        <div style="position: absolute; top: 10px; left: 10px; z-index: 1000; background: white; padding: 5px;">
+            <label>
+                <input type="checkbox" id="ecclesiasticalToggle" checked>
+                Show Church-related Records
+            </label>
+        </div>
+
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -117,7 +124,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(224,220,202,0.6039215686274509)',
@@ -240,6 +247,31 @@
                 return L.circleMarker(latlng, style_heinrich_matched_by_locality_1_0(feature));
             },
         });
+        var allHeinrichFeatures = json_heinrich_matched_by_locality_1.features;
+        function updateHeinrichLayer(showEcclesiastical) {
+            if (map.hasLayer(layer_heinrich_matched_by_locality_1)) {
+                map.removeLayer(layer_heinrich_matched_by_locality_1);
+            }
+
+            var filteredFeatures = allHeinrichFeatures.filter(function(feature) {
+                var flag = feature.properties['ecclesiastical_flag'];
+                return showEcclesiastical || flag === false || flag === 'false';
+            });
+            layer_heinrich_matched_by_locality_1 = L.geoJson(filteredFeatures, {
+                attribution: '',
+                interactive: true,
+                dataVar: 'json_heinrich_matched_by_locality_1',
+                layerName: 'layer_heinrich_matched_by_locality_1',
+                pane: 'pane_heinrich_matched_by_locality_1',
+                onEachFeature: pop_heinrich_matched_by_locality_1,
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, style_heinrich_matched_by_locality_1_0(feature));
+                }
+            });
+
+            bounds_group.addLayer(layer_heinrich_matched_by_locality_1);
+            map.addLayer(layer_heinrich_matched_by_locality_1);
+        }
         bounds_group.addLayer(layer_heinrich_matched_by_locality_1);
         map.addLayer(layer_heinrich_matched_by_locality_1);
         function pop_dioceses_2(feature, layer) {
@@ -368,6 +400,10 @@
         bounds_group.addLayer(layer_Addedgeominfo_3);
         map.addLayer(layer_Addedgeominfo_3);
         setBounds();
+        document.getElementById('ecclesiasticalToggle').addEventListener('change', function(e) {
+            updateHeinrichLayer(e.target.checked);
+        });
+        updateHeinrichLayer(true);
         </script>
     </body>
 </html>
