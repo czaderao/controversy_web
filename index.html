@@ -160,7 +160,7 @@
                         <td colspan="2"><strong>Church related?</strong>' + (feature.properties['ecclesiastical_flag'] !== null ? autolinker.link(String(feature.properties['ecclesiastical_flag']).replace(/'/g, '\'').toLocaleString()) : ' ') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String('Who?'+feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String('<strong>Who?</strong>'+feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -275,7 +275,7 @@
                     return {
                 pane: 'pane_dioceses_2',
                 radius: 4.0,
-                opacity: 1,
+                opacity: 0.6,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
