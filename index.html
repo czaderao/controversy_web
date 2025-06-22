@@ -160,7 +160,7 @@
                         <td colspan="2"><strong>Church related?</strong>' + (feature.properties['ecclesiastical_flag'] !== null ? autolinker.link(String(feature.properties['ecclesiastical_flag']).replace(/'/g, '\'').toLocaleString()) : ' ') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>Who?</strong>' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String(feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String('Who?'+feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -203,7 +203,6 @@
                 fillColor: 'rgba(15,225,46,1.0)',
                 interactive: true,
             }
-                    break;
                 default:
                     return {
                 pane: 'pane_heinrich_matched_by_locality_1',
@@ -219,7 +218,7 @@
                 fillColor: 'rgba(116,100,208,1.0)',
                 interactive: true,
             }
-                    break;
+
             }
         }
         map.createPane('pane_heinrich_matched_by_locality_1');
@@ -265,13 +264,13 @@
                 pane: 'pane_dioceses_2',
                 interactive: true,
             }
-                    break;
+
                 case 'Bishopric':
                     return {
                 pane: 'pane_dioceses_2',
                 interactive: true,
             }
-                    break;
+
                 default:
                     return {
                 pane: 'pane_dioceses_2',
@@ -287,7 +286,7 @@
                 fillColor: 'rgba(58,135,203,1.0)',
                 interactive: true,
             }
-                    break;
+
             }
         }
         map.createPane('pane_dioceses_2');
@@ -299,6 +298,7 @@
             dataVar: 'json_dioceses_2',
             layerName: 'layer_dioceses_2',
             pane: 'pane_dioceses_2',
+            opacity: 0.6,
             onEachFeature: pop_dioceses_2,
             pointToLayer: function (feature, latlng) {
                 let iconUrl;
@@ -320,7 +320,6 @@
                     iconSize: [15, 15],
                     iconAnchor: [10, 10],
                     popupAnchor: [0, 0],
-                    opacity: 0.6
                 });
 
                 return L.marker(latlng, {icon: customIcon});
