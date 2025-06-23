@@ -42,7 +42,7 @@
             zoomControl:false, maxZoom:28, minZoom:1
         }).fitBounds([[50.149091597754,8.851001351092593],[54.71483046757596,16.157293078377553]]);
         var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://github.com/czaderao" target="GitHub czaderao">qgis2web</a> &middot;<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         // remove popup's row if "visible-with-data"
         function removeEmptyRowsFromPopupContent(content, feature) {
@@ -157,10 +157,10 @@
                         <td colspan="2">' + (feature.properties['regestennummernorm'] !== null ? autolinker.link(String(feature.properties['regestennummernorm']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>Church related?</strong>' + (feature.properties['ecclesiastical_flag'] !== null ? autolinker.link(String(feature.properties['ecclesiastical_flag']).replace(/'/g, '\'').toLocaleString()) : ' ') + '</td>\
+                        <td colspan="2"><strong>Church related? </strong>' + (feature.properties['ecclesiastical_flag'] !== null ? autolinker.link(String(feature.properties['ecclesiastical_flag']).replace(/'/g, '\'').toLocaleString()) : ' ') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String('<strong>Who?</strong>'+feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['ecclesiastical_terms'] !== null ? autolinker.link(String('<strong>Who? </strong>'+feature.properties['ecclesiastical_terms']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -298,7 +298,6 @@
             dataVar: 'json_dioceses_2',
             layerName: 'layer_dioceses_2',
             pane: 'pane_dioceses_2',
-            opacity: 0.6,
             onEachFeature: pop_dioceses_2,
             pointToLayer: function (feature, latlng) {
                 let iconUrl;
@@ -319,7 +318,12 @@
                     iconUrl: iconUrl,
                     iconSize: [15, 15],
                     iconAnchor: [10, 10],
-                    popupAnchor: [0, 0],
+                    popupAnchor: [0, 0]
+                });
+
+                return L.marker(latlng, {
+                    icon: customIcon,
+                    opacity: 0.6
                 });
 
                 return L.marker(latlng, {icon: customIcon});
